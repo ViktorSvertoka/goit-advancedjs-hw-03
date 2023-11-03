@@ -1,3 +1,6 @@
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
 import axios from 'axios';
 
 axios.defaults.headers.common['x-api-key'] =
@@ -8,7 +11,7 @@ const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 const errorInfo = document.querySelector('.error');
 
-errorInfo.style.color = 'red';
+errorInfo.style.display = 'none';
 
 function hideElement(element) {
   element.style.display = 'none';
@@ -18,34 +21,40 @@ function showElement(element) {
   element.style.display = 'block';
 }
 
-function fetchBreeds() {
+async function fetchBreeds() {
   showElement(loader);
   hideElement(breedSelect);
-  hideElement(errorInfo);
 
-  return axios
+  return await axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then(response => {
       showElement(breedSelect);
       return response.data;
     })
-    .catch(error => {
-      showElement(errorInfo);
-      throw error;
+    .catch(() => {
+      iziToast.show({
+        title: 'Error',
+        message: '❌ Oops! Something went wrong! Try reloading the page!',
+        position: 'topCenter',
+        color: 'red',
+      });
     })
     .finally(() => hideElement(loader));
 }
 
-function fetchCatByBreed(breedId) {
+async function fetchCatByBreed(breedId) {
   showElement(loader);
-  hideElement(errorInfo);
 
-  return axios
+  return await axios
     .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
     .then(response => response.data)
-    .catch(error => {
-      showElement(errorInfo);
-      throw error;
+    .catch(() => {
+      iziToast.show({
+        title: 'Error',
+        message: '❌ Oops! Something went wrong! Try reloading the page!',
+        position: 'topCenter',
+        color: 'red',
+      });
     })
     .finally(() => hideElement(loader));
 }
@@ -64,31 +73,38 @@ function displayCatInfo(catData) {
   showElement(catInfo);
 }
 
-function handleBreedSelection() {
+async function handleBreedSelection() {
   const selectedBreedId = breedSelect.value;
+  const catData = await fetchCatByBreed(selectedBreedId);
 
-  fetchCatByBreed(selectedBreedId)
-    .then(catData => displayCatInfo(catData))
-    .catch(error => {
-      showElement(errorInfo);
-      throw error;
+  if (!catData) {
+    return;
+  } else if (catData.length === 0) {
+    iziToast.show({
+      title: 'Error',
+      message: '❌ Oops! Something went wrong! Try reloading the page!',
+      position: 'topCenter',
+      color: 'red',
     });
+    return;
+  }
+
+  displayCatInfo(catData);
 }
 
-export function initializeApp() {
-  fetchBreeds()
-    .then(breeds => {
-      breeds.forEach(breed => {
-        const option = document.createElement('option');
-        option.value = breed.id;
-        option.textContent = breed.name;
-        breedSelect.appendChild(option);
-      });
-    })
-    .catch(error => {
-      showElement(errorInfo);
-      throw error;
-    });
+export async function initializeApp() {
+  const breeds = await fetchBreeds();
+
+  if (!breeds) return;
+
+  const breedOptions = breeds.map(breed => {
+    const option = document.createElement('option');
+    option.value = breed.id;
+    option.textContent = breed.name;
+    return option;
+  });
+
+  breedSelect.append(...breedOptions);
 
   breedSelect.addEventListener('change', handleBreedSelection);
 }
