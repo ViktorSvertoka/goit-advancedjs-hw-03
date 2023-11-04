@@ -81,3 +81,15 @@
 .wrapper {
   display: flex;
 }
+
+.loader {
+  display: none;
+}
+
+.error {
+  display: none;
+}
+
+.breed-select {
+  display: none;
+}
