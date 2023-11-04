@@ -1,16 +1,20 @@
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const breedSelect = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
 const errorInfo = document.querySelector('.error');
+const loader = document.querySelector('.loader');
 
 errorInfo.style.display = 'none';
 
 function showElement(element) {
   element.style.display = 'block';
+}
+
+function hideElement(element) {
+  element.style.display = 'none';
 }
 
 function displayCatInfo(catData) {
@@ -29,38 +33,66 @@ function displayCatInfo(catData) {
 
 async function handleBreedSelection() {
   const selectedBreedId = breedSelect.value;
-  const catData = await fetchCatByBreed(selectedBreedId);
+  showElement(loader);
 
-  if (!catData) {
-    return;
-  } else if (catData.length === 0) {
+  try {
+    const catData = await fetchCatByBreed(selectedBreedId);
+
+    if (catData.length === 0) {
+      iziToast.show({
+        title: 'Error',
+        message: '❌ Oops! Something went wrong! Try reloading the page!',
+        position: 'topCenter',
+        color: 'red',
+      });
+    } else {
+      displayCatInfo(catData);
+    }
+  } catch (error) {
     iziToast.show({
       title: 'Error',
       message: '❌ Oops! Something went wrong! Try reloading the page!',
       position: 'topCenter',
       color: 'red',
     });
-    return;
+  } finally {
+    hideElement(loader);
   }
-
-  displayCatInfo(catData);
 }
 
 export async function initializeApp() {
-  const breeds = await fetchBreeds();
+  try {
+    showElement(loader);
+    const breeds = await fetchBreeds();
 
-  if (!breeds) return;
+    if (breeds) {
+      const breedOptions = breeds.map(breed => {
+        const option = document.createElement('option');
+        option.value = breed.id;
+        option.textContent = breed.name;
+        return option;
+      });
 
-  const breedOptions = breeds.map(breed => {
-    const option = document.createElement('option');
-    option.value = breed.id;
-    option.textContent = breed.name;
-    return option;
-  });
-
-  breedSelect.append(...breedOptions);
-
-  breedSelect.addEventListener('change', handleBreedSelection);
+      breedSelect.append(...breedOptions);
+      breedSelect.addEventListener('change', handleBreedSelection);
+    } else {
+      iziToast.show({
+        title: 'Error',
+        message: '❌ Oops! Something went wrong! Try reloading the page!',
+        position: 'topCenter',
+        color: 'red',
+      });
+    }
+  } catch (error) {
+    iziToast.show({
+      title: 'Error',
+      message: '❌ Oops! Something went wrong! Try reloading the page!',
+      position: 'topCenter',
+      color: 'red',
+    });
+  } finally {
+    hideElement(loader);
+  }
 }
 
 initializeApp();
