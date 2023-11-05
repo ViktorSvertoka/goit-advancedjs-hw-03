@@ -1,8 +1,7 @@
 import SlimSelect from 'slim-select';
-
-import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
 
 const select = document.getElementById('breed-select');
 const catInfo = document.querySelector('.cat-info');
@@ -22,15 +21,15 @@ const errorMessage = {
   color: 'red',
 };
 
-function showElement(element, hidden) {
-  element.classList.toggle('ss-hide', !hidden);
+function toggleClass(element, isVisible) {
+  element.classList.toggle('ss-hide', !isVisible);
 }
 
 async function handleBreedSelection() {
   try {
     const selectedBreedId = select.value;
-    showElement(catInfo, false);
-    showElement(spinner, true);
+    toggleClass(catInfo, false);
+    toggleClass(spinner, true);
 
     const catData = await fetchCatByBreed(selectedBreedId);
 
@@ -39,7 +38,7 @@ async function handleBreedSelection() {
     iziToast.show(errorMessage);
   }
 
-  showElement(spinner, false);
+  toggleClass(spinner, false);
 }
 
 function displayCatInfo(catData) {
@@ -56,7 +55,7 @@ function displayCatInfo(catData) {
     </div>
   `;
 
-  showElement(catInfo, true);
+  toggleClass(catInfo, true);
 }
 
 async function initializeApp() {
@@ -66,14 +65,14 @@ async function initializeApp() {
       slimSelect.setData([{ placeholder: true, text: '' }, ...data]);
     });
 
-    showElement(select, true);
+    toggleClass(select, true);
     select.addEventListener('change', handleBreedSelection);
   } catch (error) {
     iziToast.show(errorMessage);
-    showElement(select, false);
+    toggleClass(select, false);
   }
 
-  showElement(spinner, false);
+  toggleClass(spinner, false);
 }
 
 initializeApp();
