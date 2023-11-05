@@ -114,3 +114,5 @@ https://api.thecatapi.com/v1/breeds123. Запит отримання списк
   CSS-завантажувачами, наприклад https://cssloaders.github.io/
 - Замість завантажувача p.error можеш використовувати будь-яку бібліотеку з
   гарними сповіщеннями, наприклад iziToast
+
+![Cat](./assets/screen.png)

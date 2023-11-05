@@ -1,10 +1,19 @@
+import SlimSelect from 'slim-select';
+
 import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const breedSelect = document.querySelector('.breed-select');
+const select = document.getElementById('breed-select');
 const catInfo = document.querySelector('.cat-info');
 const spinner = document.querySelector('.spinner');
+
+const slimSelect = new SlimSelect({
+  select: select,
+  settings: {
+    placeholderText: 'Search breeds',
+  },
+});
 
 const errorMessage = {
   title: 'Error',
@@ -13,19 +22,15 @@ const errorMessage = {
   color: 'red',
 };
 
-function showElement(element) {
-  element.style.display = 'block';
-}
-
-function hideElement(element) {
-  element.style.display = 'none';
+function showElement(element, hidden) {
+  element.classList.toggle('ss-hide', !hidden);
 }
 
 async function handleBreedSelection() {
   try {
-    const selectedBreedId = breedSelect.value;
-    hideElement(catInfo);
-    showElement(spinner);
+    const selectedBreedId = select.value;
+    showElement(catInfo, false);
+    showElement(spinner, true);
 
     const catData = await fetchCatByBreed(selectedBreedId);
 
@@ -34,7 +39,7 @@ async function handleBreedSelection() {
     iziToast.show(errorMessage);
   }
 
-  hideElement(spinner);
+  showElement(spinner, false);
 }
 
 function displayCatInfo(catData) {
@@ -42,36 +47,33 @@ function displayCatInfo(catData) {
   catInfo.innerHTML = `
     <div class="wrapper">
       <img class="cat-img" src="${catData[0].url}" alt="Cat Image"/>
-      <div>
-        <h2>${cat.name}</h2>
-        <p><b>Description:</b> ${cat.description}</p>
-        <p><b>Temperament:</b> ${cat.temperament}</p>
+      <div class="wrap">
+        <h2 class="text">${cat.name}</h2>
+        <p><b class="primary">Description:</b> ${cat.description}</p>
+        <p><b class="primary">Temperament:</b> ${cat.temperament}</p>
+        <p><b class="primary">Country:</b> ${cat.origin}</p>
       </div>
     </div>
   `;
-  showElement(catInfo);
+
+  showElement(catInfo, true);
 }
 
 async function initializeApp() {
   try {
-    const breeds = await fetchBreeds();
-
-    const breedOptions = breeds.map(breed => {
-      const option = document.createElement('option');
-      option.value = breed.id;
-      option.textContent = breed.name;
-      return option;
+    await fetchBreeds().then(breeds => {
+      const data = breeds.map(({ id, name }) => ({ text: name, value: id }));
+      slimSelect.setData([{ placeholder: true, text: '' }, ...data]);
     });
 
-    breedSelect.append(...breedOptions);
-    showElement(breedSelect);
-
-    breedSelect.addEventListener('change', handleBreedSelection);
+    showElement(select, true);
+    select.addEventListener('change', handleBreedSelection);
   } catch (error) {
     iziToast.show(errorMessage);
+    showElement(select, false);
   }
 
-  hideElement(spinner);
+  showElement(spinner, false);
 }
 
 initializeApp();

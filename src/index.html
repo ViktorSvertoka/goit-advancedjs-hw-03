@@ -3,17 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="shortcut icon" href="./image/favicon.ico" />
-    <title>Advanced JS</title>
+    <title>Cats API</title>
   </head>
   <body>
-    <select class="breed-select"></select>
+    <div class="heder-wrap">
+      <div class="concept concept-two">
+        <div
+          class="hover wow animate__animated animate__fadeInRightBig"
+          data-wow-duration="1s"
+          data-wow-delay="0.3s"
+        >
+          <h1>C</h1>
+        </div>
+        <div
+          class="hover wow animate__animated animate__fadeInRightBig"
+          data-wow-duration="1s"
+          data-wow-delay="0.6s"
+        >
+          <h1>A</h1>
+        </div>
+        <div
+          class="hover wow animate__animated animate__fadeInRightBig"
+          data-wow-duration="1s"
+          data-wow-delay="0.9s"
+        >
+          <h1>T</h1>
+        </div>
+        <div
+          class="hover wow animate__animated animate__fadeInRightBig"
+          data-wow-duration="1s"
+          data-wow-delay="1.2s"
+        >
+          <h1>S</h1>
+        </div>
+      </div>
+    </div>
+
+    <select id="breed-select"></select>
     <p class="loader">Loading data, please wait...</p>
     <p class="error">Oops! Something went wrong! Try reloading the page!</p>
     <div class="cat-info"></div>
     <span class="spinner"></span>
 
     <script src="./index.js" type="module"></script>
+    <script src="./js/wow.js"></script>
+    <script>
+      new WOW().init();
+    </script>
   </body>
 </html>
