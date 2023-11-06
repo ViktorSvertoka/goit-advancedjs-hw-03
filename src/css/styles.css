@@ -412,27 +412,27 @@ h1 {
 }
 
 .ajax-loader .paw:nth-child(1) {
-  animation-delay: 0.25s;
+  animation-delay: 1.25s;
 }
 
 .ajax-loader .paw:nth-child(2) {
-  animation-delay: 0s;
+  animation-delay: 1s;
 }
 
 .ajax-loader .paw:nth-child(3) {
-  animation-delay: -0.25s;
+  animation-delay: 0.75s;
 }
 
 .ajax-loader .paw:nth-child(4) {
-  animation-delay: -0.5s;
+  animation-delay: 0.5s;
 }
 
 .ajax-loader .paw:nth-child(5) {
-  animation-delay: -0.75s;
+  animation-delay: 0.25s;
 }
 
 .ajax-loader .paw:nth-child(6) {
-  animation-delay: -1s;
+  animation-delay: 0s;
 }
 
 .ajax-loader .paw.no-cssanimations {
