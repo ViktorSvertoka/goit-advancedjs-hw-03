@@ -377,7 +377,7 @@ h1 {
 
 .ajax-loader {
   position: absolute;
-  top: 25%;
+  top: 35%;
   left: 50%;
   transform-origin: 50% 50%;
   transform: rotate(90deg) translate(-50%, 0%);
