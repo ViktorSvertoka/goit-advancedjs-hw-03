@@ -6,7 +6,7 @@ import{a as p,S as m,i as u}from"./assets/vendor-2507e9f0.js";(function(){const 
         <p><b class="primary">Description:</b> ${e.description}</p>
         <p><b class="primary">Temperament:</b> ${e.temperament}</p>
         <p><b class="primary">Country:</b> ${e.origin}</p>
-        <img src="https://flagsapi.com/${e.country_code}/shiny/64.png" alt="Country code" onerror="this.src='${y}'" style="width: 64px;">
+        <img src="https://flagsapi.com/${e.country_code}/shiny/64.png" alt="Country code" onerror="src='${y}'" style="width: 64px;">
       </div>
     </div>
   `,o(l,!0)}async function S(){try{await h().then(t=>{const e=t.map(({id:c,name:n})=>({text:n,value:c}));b.setData([{placeholder:!0,text:""},...e])}),o(a,!0),a.addEventListener("change",w)}catch{u.show(f),o(a,!1)}o(d,!1)}S();
