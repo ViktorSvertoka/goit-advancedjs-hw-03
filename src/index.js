@@ -43,17 +43,20 @@ async function handleBreedSelection() {
 }
 
 function displayCatInfo(catData) {
-  const cat = catData[0].breeds[0];
+  const { name, description, temperament, origin, country_code } =
+    catData[0].breeds[0];
+
+  const catImg = catData[0].url;
 
   catInfo.innerHTML = `
     <div class="wrapper">
-      <img class="cat-img" src="${catData[0].url}" alt="Cat image"/>
+      <img class="cat-img" src="${catImg}" alt="${name}"/>
       <div class="wrap">
-        <h2 class="text">${cat.name}</h2>
-        <p><b class="primary">Description:</b> ${cat.description}</p>
-        <p><b class="primary">Temperament:</b> ${cat.temperament}</p>
-        <p><b class="primary">Country:</b> ${cat.origin}</p>
-        <img src="https://flagsapi.com/${cat.country_code}/shiny/64.png" alt="Country code" onerror="src='${noImage}'" style="width: 64px;">
+        <h2 class="text">${name}</h2>
+        <p><b class="primary">Description:</b> ${description}</p>
+        <p><b class="primary">Temperament:</b> ${temperament}</p>
+        <p><b class="primary">Country:</b> ${origin}</p>
+        <img src="https://flagsapi.com/${country_code}/shiny/64.png" alt="${origin}" onerror="src='${noImage}'" style="width: 64px;">
       </div>
     </div>
   `;
