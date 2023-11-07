@@ -21,7 +21,6 @@ body {
   padding: 0;
   background: url(../image/cat-d.jpg) center / cover no-repeat;
   min-height: 100vh;
-  overflow: hidden;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 0.02em;
   color: #a9a9a9;
