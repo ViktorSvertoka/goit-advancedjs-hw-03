@@ -45,12 +45,13 @@ function displayCatInfo(catData) {
   const cat = catData[0].breeds[0];
   catInfo.innerHTML = `
     <div class="wrapper">
-      <img class="cat-img" src="${catData[0].url}" alt="Cat Image"/>
+      <img class="cat-img" src="${catData[0].url}" alt="Cat image"/>
       <div class="wrap">
         <h2 class="text">${cat.name}</h2>
         <p><b class="primary">Description:</b> ${cat.description}</p>
         <p><b class="primary">Temperament:</b> ${cat.temperament}</p>
         <p><b class="primary">Country:</b> ${cat.origin}</p>
+        <img src="https://flagsapi.com/${cat.country_code}/shiny/64.png" alt="Country code"> 
       </div>
     </div>
   `;
