@@ -53,7 +53,7 @@ function displayCatInfo(catData) {
         <p><b class="primary">Description:</b> ${cat.description}</p>
         <p><b class="primary">Temperament:</b> ${cat.temperament}</p>
         <p><b class="primary">Country:</b> ${cat.origin}</p>
-        <img src="https://flagsapi.com/${cat.country_code}/shiny/64.png" alt="Country code" onerror="this.src='${noImage}'" style="width: 64px;">
+        <img src="https://flagsapi.com/${cat.country_code}/shiny/64.png" alt="Country code" onerror="src='${noImage}'" style="width: 64px;">
       </div>
     </div>
   `;
