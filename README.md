@@ -32,7 +32,7 @@
 породою. Подивися демо відео роботи програми, використовуй його як орієнтир для
 необхідного функціоналу.
 
-[Демо-відео](https://textbook.edu.goit.global/lms-js-homework/v2/uk/assets/medias/catsearch-demo-7a9eca87a69c1131c828592a49f6f647.mp4)
+https://textbook.edu.goit.global/lms-js-homework/v2/uk/assets/medias/catsearch-demo-7a9eca87a69c1131c828592a49f6f647.mp4
 
 ## HTTP-запити
 
